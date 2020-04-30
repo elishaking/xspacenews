@@ -1,5 +1,6 @@
 import { channels } from "../data/channel";
 import axios from "axios";
+import { logInfo } from "../utils/logger";
 
 export const runJobs = () => {
   channels.forEach((channel) => {
@@ -9,6 +10,6 @@ export const runJobs = () => {
 
 const getUpdatesFromChannel = (channel: Channel) => {
   axios.get(channel.searchURL).then((res) => {
-    console.log(res.data);
+    logInfo("data", res.data);
   });
 };
