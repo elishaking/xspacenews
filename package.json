@@ -2,10 +2,16 @@
   "name": "xspacenews",
   "version": "1.0.0",
   "description": "Updates on space exploration",
-  "main": "server.js",
+  "main": "dist/server.js",
   "repository": "https://github.com/elishaking/xspacenews.git",
   "author": "King Elisha <ek.chibueze@gmail.com>",
   "license": "NOLICENSE",
+  "scripts": {
+    "tsc:init": "tsc --init",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "start": "nodemon server.js"
+  },
   "dependencies": {
     "express": "^4.17.1"
   },
