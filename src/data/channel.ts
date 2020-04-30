@@ -1,3 +1,32 @@
+export const channels: Channel[] = [
+  {
+    name: "CNN",
+    url: "",
+    searchURL: "",
+  },
+  {
+    name: "BBC",
+    url: "",
+    searchURL: "",
+  },
+  {
+    name: "",
+    url: "",
+    searchURL: "",
+  },
+  {
+    name: "",
+    url: "",
+    searchURL: "",
+  },
+  {
+    name: "",
+    url: "",
+    searchURL: "",
+  },
+];
+
+/*
 export const channels: Channels = {
   CNN: {
     name: "CNN",
@@ -25,3 +54,4 @@ export const channels: Channels = {
     searchURL: "",
   },
 };
+*/

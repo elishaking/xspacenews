@@ -1,3 +1,9 @@
-export const runJobs = () => {};
+import { channels } from "../data/channel";
 
-const getCNN = () => {};
+export const runJobs = () => {
+  channels.forEach((channel) => {
+    getUpdatesFromChannel(channel);
+  });
+};
+
+const getUpdatesFromChannel = (channel: Channel) => {};
