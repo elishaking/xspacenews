@@ -1,0 +1,7 @@
+export enum Intervals {
+  YEAR = 31104000000,
+  MONTH = 2592000000,
+  DAY = 86400000,
+  HOUR = 3600000,
+  MINUTE = 60000,
+}
