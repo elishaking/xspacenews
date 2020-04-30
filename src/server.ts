@@ -10,4 +10,6 @@ server.get("/", (req, res) => {
 server.use("/api", api);
 
 const port = process.env.PORT || 8000;
-server.listen(port, () => console.log(`server listening at port: ${port}`));
+server.listen(port, () => {
+  console.log(`server listening at port: ${port}`);
+});
