@@ -1,3 +1,3 @@
 import puppeteer from "puppeteer";
 
-export const browser = (async () => await puppeteer.launch())();
+export const loadingBrowser = (async () => await puppeteer.launch())();
