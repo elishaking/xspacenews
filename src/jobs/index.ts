@@ -18,15 +18,12 @@ export const runJobs = () => {
 };
 
 const getUpdatesFromChannel = async (channel: Channel) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ devtools: true });
   const page = await browser.newPage();
 
-  await page.goto(channel.searchURL, { waitUntil: "networkidle2" });
-  await page.addScriptTag({
-    type: "module",
-    path: path.join(__dirname, "../models/channel.js"),
+  await page.goto(channel.searchURL, {
+    waitUntil: "networkidle2",
+    timeout: 1000000000,
   });
   const articles = await getArticlesFromCNN(page);
-
-  console.log(articles);
 };
