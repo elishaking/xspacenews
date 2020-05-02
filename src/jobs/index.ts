@@ -1,8 +1,10 @@
 import { channels } from "../data/channel";
+import { getArticlesFromCNN } from "./cnn";
 
 // import { loadingBrowser } from "./browser";
-import { Channel, CNN } from "../models/channel";
+import { Channel } from "../models/channel";
 import { Article } from "../models/article";
+import path from "path";
 // import { logInfo } from "../utils/logger";
 
 import puppeteer from "puppeteer";
@@ -16,13 +18,15 @@ export const runJobs = () => {
 };
 
 const getUpdatesFromChannel = async (channel: Channel) => {
-  const browser = await puppeteer.launch({ devtools: true });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   await page.goto(channel.searchURL, { waitUntil: "networkidle2" });
-  await page.evaluate(() => {
-    const articles: Article[] = new CNN().getArticles();
-
-    console.log(articles);
+  await page.addScriptTag({
+    type: "module",
+    path: path.join(__dirname, "../models/channel.js"),
   });
+  const articles = await getArticlesFromCNN(page);
+
+  console.log(articles);
 };
