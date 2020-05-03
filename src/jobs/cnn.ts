@@ -99,7 +99,13 @@ export const getArticlesFromCNN = async (page: Page) => {
               date: this.getArticleDate(content),
             };
 
-            articles.push(article);
+            if (
+              article.url !== "" &&
+              article.imageURL !== "" &&
+              article.title !== "" &&
+              article.description !== ""
+            )
+              articles.push(article);
           });
 
           return articles;

@@ -42,12 +42,14 @@ const getUpdatesFromChannel = async (channel: Channel) => {
     page
   )) as Article[];
 
-  articles?.forEach((article) => {
-    ArticleModel.create(article).then((articleCreated) => {
-      console.log(
-        `${new Date().toDateString()} Created article: from ${channel.name}`
-      );
-      // console.log(articleCreated);
-    });
-  });
+  console.log(articles);
+
+  // articles?.forEach((article) => {
+  //   ArticleModel.create(article).then((articleCreated) => {
+  //     console.log(
+  //       `${new Date().toDateString()} Created article: from ${channel.name}`
+  //     );
+  //     // console.log(articleCreated);
+  //   });
+  // });
 };

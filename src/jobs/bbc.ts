@@ -7,6 +7,10 @@ import { Article } from "../models/article";
 export const getArticlesFromBBC = async (page: Page) => {
   return page
     .evaluate(() => {
+      const logError = (error: any) => {
+        console.error(error);
+      };
+
       const extrationError = (channelName: string, fieldName: string) =>
         `${channelName}: Error extracting ARTICLE_${fieldName.toUpperCase()}`;
 
@@ -99,7 +103,13 @@ export const getArticlesFromBBC = async (page: Page) => {
               date: this.getArticleDate(content),
             };
 
-            articles.push(article);
+            if (
+              article.url !== "" &&
+              article.imageURL !== "" &&
+              article.title !== "" &&
+              article.description !== ""
+            )
+              articles.push(article);
           });
 
           return articles;
