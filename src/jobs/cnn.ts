@@ -44,6 +44,9 @@ export const getArticlesFromCNN = async (page: Page) => {
 
           if (title == undefined) logError(extrationError(this.name, "title"));
 
+          if ((title as string).length > 250)
+            return `${(title as string).substring(0, 250)}...`;
+
           return title || "";
         }
 
