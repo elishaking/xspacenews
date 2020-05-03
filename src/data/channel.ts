@@ -12,11 +12,11 @@ export const channels: Channel[] = [
     url: "https://www.bbc.co.uk",
     searchURL: "https://www.bbc.co.uk/search?q=space+exploration",
   },
-  {
-    name: "",
-    url: "",
-    searchURL: "",
-  },
+  // {
+  //   name: "",
+  //   url: "",
+  //   searchURL: "",
+  // },
   {
     name: "New York Times",
     url: "https://www.nytimes.com",

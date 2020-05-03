@@ -4,7 +4,7 @@ import { Channel } from "../models/channel";
 import { logError } from "../utils/logger";
 import { Article } from "../models/article";
 
-export const getArticlesFromCNN = async (page: Page) => {
+export const getArticlesFromBBC = async (page: Page) => {
   return page
     .evaluate(() => {
       const extrationError = (channelName: string, fieldName: string) =>
