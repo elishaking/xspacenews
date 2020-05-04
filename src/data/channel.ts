@@ -30,11 +30,11 @@ export const channels: Channel[] = [
     url: "https://www.nytimes.com",
     searchURL: "https://www.nytimes.com/search?query=space+exploration",
   },
-  {
-    name: Channels.PUNCH,
-    url: "https://punchng.com",
-    searchURL: "https://punchng.com/search/space+exploration",
-  },
+  // {
+  //   name: Channels.PUNCH,
+  //   url: "https://punchng.com",
+  //   searchURL: "https://punchng.com/search/space+exploration",
+  // },
 ];
 
 /*

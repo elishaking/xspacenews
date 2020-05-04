@@ -10,11 +10,9 @@ import { getArticlesFromTNY } from "./channels/tny";
 import { getArticlesFromNYT } from "./channels/nyt";
 
 export const runJobs = () => {
-  //   channels.forEach((channel) => {
-  //     getUpdatesFromChannel(channel);
-  //   });
-
-  getUpdatesFromChannel(channels[3]);
+  channels.forEach((channel) => {
+    getUpdatesFromChannel(channel);
+  });
 };
 
 const getChannelArticleFunction = (name: string) => {

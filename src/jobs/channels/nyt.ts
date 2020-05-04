@@ -1,7 +1,7 @@
 import { Page } from "puppeteer";
 
 import { Channel } from "../../models/channel";
-import { Channels } from "../../data/channel";
+// import { Channels } from "../../data/channel";
 import { logError } from "../../utils/logger";
 import { Article } from "../../models/article";
 
