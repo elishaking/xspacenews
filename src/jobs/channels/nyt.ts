@@ -18,7 +18,7 @@ export const getArticlesFromNYT = async (page: Page) => {
       class NYT implements Channel {
         static ARTICLE_QUERY_STRING = ".css-1kl114x";
 
-        name = Channels.NYT;
+        name = "New York Times";
         url = "https://www.nytimes.com";
         searchURL = "https://www.nytimes.com/search?query=space+exploration";
 

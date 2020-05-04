@@ -7,20 +7,22 @@ import { Article, ArticleModel } from "../models/article";
 import { getArticlesFromCNN } from "./channels/cnn";
 import { getArticlesFromBBC } from "./channels/bbc";
 import { getArticlesFromTNY } from "./channels/tny";
+import { getArticlesFromNYT } from "./channels/nyt";
 
 export const runJobs = () => {
   //   channels.forEach((channel) => {
   //     getUpdatesFromChannel(channel);
   //   });
 
-  getUpdatesFromChannel(channels[2]);
+  getUpdatesFromChannel(channels[3]);
 };
 
 const getChannelArticleFunction = (name: string) => {
   if (name === Channels.CNN) return getArticlesFromCNN;
   else if (name === Channels.BBC) return getArticlesFromBBC;
   else if (name === Channels.TNY) return getArticlesFromTNY;
-  else return getArticlesFromTNY;
+  else if (name === Channels.NYT) return getArticlesFromNYT;
+  else return getArticlesFromNYT;
 };
 
 const getUpdatesFromChannel = async (channel: Channel) => {
@@ -35,7 +37,7 @@ const getUpdatesFromChannel = async (channel: Channel) => {
     page
   )) as Article[];
 
-  console.log(articles);
+  // console.log(articles);
 
   articles?.forEach((article) => {
     ArticleModel.create(article)
