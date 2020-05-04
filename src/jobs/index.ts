@@ -6,8 +6,7 @@ import { loadingBrowser } from "./browser";
 import { Channel } from "../models/channel";
 import { Article, ArticleModel } from "../models/article";
 
-import puppeteer from "puppeteer";
-import { Model } from "sequelize/types";
+import { getArticlesFromTNY } from "./tny";
 
 enum Channels {
   CNN = "CNN",
@@ -21,13 +20,14 @@ export const runJobs = () => {
   //     getUpdatesFromChannel(channel);
   //   });
 
-  getUpdatesFromChannel(channels[1]);
+  getUpdatesFromChannel(channels[2]);
 };
 
 const getChannelArticleFunction = (name: string) => {
   if (name === Channels.CNN) return getArticlesFromCNN;
   else if (name === Channels.BBC) return getArticlesFromBBC;
-  else return getArticlesFromBBC;
+  else if (name === Channels.NYT) return getArticlesFromTNY;
+  else return getArticlesFromTNY;
 };
 
 const getUpdatesFromChannel = async (channel: Channel) => {
@@ -42,14 +42,16 @@ const getUpdatesFromChannel = async (channel: Channel) => {
     page
   )) as Article[];
 
-  // console.log(articles);
+  console.log(articles);
 
   articles?.forEach((article) => {
-    ArticleModel.create(article).then((articleCreated) => {
-      console.log(
-        `${new Date().toDateString()} Created article: from ${channel.name}`
-      );
-      // console.log(articleCreated);
-    });
+    ArticleModel.create(article)
+      .then((articleCreated) => {
+        console.log(
+          `${new Date().toDateString()} Created article: from ${channel.name}`
+        );
+        // console.log(articleCreated);
+      })
+      .catch((err) => console.error(err));
   });
 };

@@ -4,7 +4,7 @@ import { Channel } from "../models/channel";
 import { logError } from "../utils/logger";
 import { Article } from "../models/article";
 
-export const getArticlesFromNYC = async (page: Page) => {
+export const getArticlesFromTNY = async (page: Page) => {
   return page
     .evaluate(() => {
       const logError = (error: any) => {
@@ -14,13 +14,13 @@ export const getArticlesFromNYC = async (page: Page) => {
       const extrationError = (channelName: string, fieldName: string) =>
         `${channelName}: Error extracting ARTICLE_${fieldName.toUpperCase()}`;
 
-      class NYC implements Channel {
+      class TNY implements Channel {
         static ARTICLE_QUERY_STRING = ".River__riverItem___3huWr";
         static CONTENT_QUERY_STRING = ".River__riverItemBody___347sz";
 
-        name = "New York Times";
-        url = "https://www.nytimes.com";
-        searchURL = "https://www.nytimes.com/search?query=space+exploration";
+        name = "The New Yorker";
+        url = "https://www.newyorker.com";
+        searchURL = "https://www.newyorker.com/search/q/space%20exploration";
 
         getArticleURL(a: HTMLAnchorElement | null): string {
           const url = a?.href;
@@ -76,18 +76,18 @@ export const getArticlesFromNYC = async (page: Page) => {
         }
 
         /**
-         * Gets all articles from `NYC` channel. Call from browser context
+         * Gets all articles from `TNY` channel. Call from browser context
          */
         getArticles(): Article[] {
           const articles: Article[] = [];
           const articleDivs = document.querySelectorAll(
-            NYC.ARTICLE_QUERY_STRING
+            TNY.ARTICLE_QUERY_STRING
           );
 
           articleDivs.forEach((articleDiv) => {
             const a = articleDiv.querySelector(".River__hed___re6RP")
               ?.parentElement as HTMLAnchorElement | null;
-            const content = articleDiv.querySelector(NYC.CONTENT_QUERY_STRING);
+            const content = articleDiv.querySelector(TNY.CONTENT_QUERY_STRING);
 
             const article: Article = {
               url: this.getArticleURL(a),
@@ -97,6 +97,8 @@ export const getArticlesFromNYC = async (page: Page) => {
               description: this.getArticleDescription(content),
               date: this.getArticleDate(content),
             };
+
+            console.log(article);
 
             if (
               article.url !== "" &&
@@ -111,7 +113,7 @@ export const getArticlesFromNYC = async (page: Page) => {
         }
       }
 
-      return new NYC().getArticles();
+      return new TNY().getArticles();
     })
     .catch((err) => logError(err));
 };
