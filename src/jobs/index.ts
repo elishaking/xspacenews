@@ -1,4 +1,4 @@
-import { channels } from "../data/channel";
+import { channels, Channels } from "../data/channel";
 
 import { loadingBrowser } from "../utils/browser";
 import { Channel } from "../models/channel";
@@ -7,13 +7,6 @@ import { Article, ArticleModel } from "../models/article";
 import { getArticlesFromCNN } from "./channels/cnn";
 import { getArticlesFromBBC } from "./channels/bbc";
 import { getArticlesFromTNY } from "./channels/tny";
-
-enum Channels {
-  CNN = "CNN",
-  BBC = "BBC",
-  NYT = "New York Times",
-  PUNCH = "Punch",
-}
 
 export const runJobs = () => {
   //   channels.forEach((channel) => {
@@ -26,7 +19,7 @@ export const runJobs = () => {
 const getChannelArticleFunction = (name: string) => {
   if (name === Channels.CNN) return getArticlesFromCNN;
   else if (name === Channels.BBC) return getArticlesFromBBC;
-  else if (name === Channels.NYT) return getArticlesFromTNY;
+  else if (name === Channels.TNY) return getArticlesFromTNY;
   else return getArticlesFromTNY;
 };
 
