@@ -1,12 +1,12 @@
 import { channels } from "../data/channel";
-import { getArticlesFromCNN } from "./cnn";
-import { getArticlesFromBBC } from "./bbc";
 
 import { loadingBrowser } from "./browser";
 import { Channel } from "../models/channel";
 import { Article, ArticleModel } from "../models/article";
 
-import { getArticlesFromTNY } from "./tny";
+import { getArticlesFromCNN } from "./channels/cnn";
+import { getArticlesFromBBC } from "./channels/bbc";
+import { getArticlesFromTNY } from "./channels/tny";
 
 enum Channels {
   CNN = "CNN",

@@ -1,8 +1,8 @@
 import { Page } from "puppeteer";
 
-import { Channel } from "../models/channel";
-import { logError } from "../utils/logger";
-import { Article } from "../models/article";
+import { Channel } from "../../models/channel";
+import { logError } from "../../utils/logger";
+import { Article } from "../../models/article";
 
 export const getArticlesFromTNY = async (page: Page) => {
   return page

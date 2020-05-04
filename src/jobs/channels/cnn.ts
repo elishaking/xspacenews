@@ -1,28 +1,25 @@
 import { Page } from "puppeteer";
 
-import { Channel } from "../models/channel";
-import { logError } from "../utils/logger";
-import { Article } from "../models/article";
+import { Channel } from "../../models/channel";
+import { logError } from "../../utils/logger";
+import { Article } from "../../models/article";
 
-export const getArticlesFromBBC = async (page: Page) => {
+export const getArticlesFromCNN = async (page: Page) => {
   return page
     .evaluate(() => {
-      const logError = (error: any) => {
-        console.error(error);
-      };
-
       const extrationError = (channelName: string, fieldName: string) =>
         `${channelName}: Error extracting ARTICLE_${fieldName.toUpperCase()}`;
 
-      class BBC implements Channel {
-        static ARTICLE_QUERY_STRING = ".ett16tt11";
-        // static CONTENT_QUERY_STRING = ".ett16tt9";
-        // static BODY_QUERY_STRING = ".ett16tt7";
-        // static DATE_QUERY_STRING = ".ecn1o5v0`";
+      class CNN implements Channel {
+        static ARTICLE_QUERY_STRING = ".cnn-search__result";
+        static CONTENT_QUERY_STRING = ".cnn-search__result-contents";
+        static BODY_QUERY_STRING = ".cnn-search__result-body";
+        static DATE_QUERY_STRING = ".cnn-search__result-publish-date";
 
-        name = "BBC";
-        url = "https://www.bbc.co.uk";
-        searchURL = "https://www.bbc.co.uk/search?q=space+exploration";
+        name = "CNN";
+        url = "https://edition.cnn.com/";
+        searchURL =
+          "https://edition.cnn.com/search?size=10&q=space%20exploration&type=article";
 
         getArticleURL(a: HTMLAnchorElement | null): string {
           const url = a?.href;
@@ -32,10 +29,9 @@ export const getArticlesFromBBC = async (page: Page) => {
           return url || "";
         }
 
-        getArticleImageURL(articleDiv: HTMLDivElement | null): string {
-          const imageURL = articleDiv?.querySelector<HTMLImageElement>(
-            ".ee0ct7c0"
-          )?.src;
+        getArticleImageURL(a: HTMLAnchorElement | null): string {
+          const imageURL = (a?.children[0] as HTMLImageElement | undefined)
+            ?.src;
 
           if (imageURL == undefined)
             logError(extrationError(this.name, "image_url"));
@@ -43,8 +39,8 @@ export const getArticlesFromBBC = async (page: Page) => {
           return imageURL || "";
         }
 
-        getArticleTitle(a: HTMLAnchorElement | null): string {
-          const title = a?.textContent;
+        getArticleTitle(content: Element | null): string {
+          const title = content?.querySelector("a")?.textContent;
 
           if (title == undefined) logError(extrationError(this.name, "title"));
 
@@ -56,7 +52,7 @@ export const getArticlesFromBBC = async (page: Page) => {
 
         getArticleDescription(content: Element | null): string {
           const description = content
-            ?.querySelectorAll("p")[1]
+            ?.querySelector(".cnn-search__result-body")
             ?.textContent?.trim()
             .substring(0, 1000);
 
@@ -67,9 +63,9 @@ export const getArticlesFromBBC = async (page: Page) => {
         }
 
         getArticleDate(content: Element | null): number {
-          const dateString = content
-            ?.querySelector(".ecn1o5v0")
-            ?.children[1].textContent?.trim();
+          const dateString = content?.querySelector(
+            ".cnn-search__result-publish-date"
+          )?.children[1].textContent;
 
           if (dateString == undefined) {
             logError(extrationError(this.name, "date"));
@@ -80,25 +76,25 @@ export const getArticlesFromBBC = async (page: Page) => {
         }
 
         /**
-         * Gets all articles from `BBC` channel. Call from browser context
+         * Gets all articles from `CNN` channel. Call from browser context
          */
         getArticles(): Article[] {
           const articles: Article[] = [];
-          const articleDivs = document.querySelectorAll(
-            BBC.ARTICLE_QUERY_STRING
-          );
+          const articleDivs = document.querySelectorAll(".cnn-search__result");
 
           articleDivs.forEach((articleDiv) => {
             const a = articleDiv.querySelector<HTMLAnchorElement>(
-              ".ett16tt9 a"
+              ".cnn-search__result-thumbnail a"
             );
-            const content = articleDiv.querySelector(".ett16tt9");
+            const content = articleDiv.querySelector(
+              ".cnn-search__result-contents"
+            );
 
             const article: Article = {
               url: this.getArticleURL(a),
-              imageURL: this.getArticleImageURL(articleDiv as HTMLDivElement),
+              imageURL: this.getArticleImageURL(a),
               source: this.name,
-              title: this.getArticleTitle(a),
+              title: this.getArticleTitle(content),
               description: this.getArticleDescription(content),
               date: this.getArticleDate(content),
             };
@@ -116,7 +112,7 @@ export const getArticlesFromBBC = async (page: Page) => {
         }
       }
 
-      return new BBC().getArticles();
+      return new CNN().getArticles();
     })
     .catch((err) => logError(err));
 };
