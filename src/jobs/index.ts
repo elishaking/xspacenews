@@ -1,6 +1,6 @@
 import { channels } from "../data/channel";
 
-import { loadingBrowser } from "./browser";
+import { loadingBrowser } from "../utils/browser";
 import { Channel } from "../models/channel";
 import { Article, ArticleModel } from "../models/article";
 
