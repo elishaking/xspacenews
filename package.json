@@ -5,12 +5,12 @@
   "main": "dist/server.js",
   "repository": "https://github.com/elishaking/xspacenews.git",
   "author": "King Elisha <ek.chibueze@gmail.com>",
-  "license": "NOLICENSE",
   "scripts": {
     "tsc:init": "tsc --init",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "start": "nodemon server.js"
+    "start:dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -25,5 +25,8 @@
     "@types/node": "^13.13.4",
     "@types/puppeteer": "^2.0.1",
     "@types/sequelize": "^4.28.8"
+  },
+  "engines": {
+    "node": "12.16.x"
   }
 }
