@@ -60,4 +60,4 @@ export const ArticleModel = <ArticleModelStatic>db.define(
   }
 );
 
-ArticleModel.sync({ alter: true });
+// ArticleModel.sync({alter: true});
