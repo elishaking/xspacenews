@@ -10,7 +10,7 @@ export interface Article {
 import Sequelize, { Model, BuildOptions } from "sequelize";
 import { db } from "../config/db";
 
-interface ArticleModelAttributes extends Model {
+export interface ArticleModelAttributes extends Model {
   readonly url: string;
   readonly imageURL: string;
   readonly title: string;
