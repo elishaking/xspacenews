@@ -1,3 +1,5 @@
+import Sequelize from "sequelize";
+
 import { ArticleModel, ArticleModelAttributes } from "../models/article";
 import { logError } from "../utils/logger";
 
@@ -29,6 +31,30 @@ export function getArticleByID(id: number): Promise<ArticleModelAttributes> {
           logError(`Article with id: ${id} does not exist`);
           reject(`Article with id: ${id} does not exist`);
         }
+      })
+      .catch((err) => {
+        logError(err);
+        reject(err);
+      });
+  });
+}
+
+/**
+ * Finds and returns all `articles` that match the specified `query` from the database
+ */
+export function getArticlesBySearchQuery(
+  query: string
+): Promise<ArticleModelAttributes[]> {
+  return new Promise((resolve, reject) => {
+    ArticleModel.findAll({
+      where: Sequelize.or(
+        { title: { contains: query } },
+        { description: { contains: query } },
+        { source: { contains: query } }
+      ),
+    })
+      .then((articles) => {
+        resolve(articles);
       })
       .catch((err) => {
         logError(err);
