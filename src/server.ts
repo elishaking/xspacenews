@@ -1,4 +1,10 @@
+import dotenv from "dotenv";
+import { join, dirname } from "path";
+
+dotenv.config({ path: join(dirname(__dirname), ".env") });
+
 import express from "express";
+
 import { api } from "./routes/api";
 import { runJobs } from "./jobs";
 import { db } from "./config/db";
