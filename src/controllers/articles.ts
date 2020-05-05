@@ -31,3 +31,35 @@ export const getArticles = (req: Request, res: Response) => {
       res.json(response);
     });
 };
+
+/**
+ * Responds with `article` at a given `id`
+ *
+ * **route**: /api/v1/articles/:id
+ */
+export const getArticleByID = (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  ArticleService.getArticleByID(parseInt(id))
+    .then((article) => {
+      const response: ArticleResponse = {
+        success: true,
+        message: `Retrieved article with id: ${id}`,
+        statusCode: 200,
+        data: article,
+      };
+
+      res.json(response);
+    })
+    .catch((err) => {
+      // TODO: do not return error object
+      const response: ErrorResponse = {
+        success: false,
+        message: err.message,
+        statusCode: 400,
+        error: err,
+      };
+
+      res.json(response);
+    });
+};
