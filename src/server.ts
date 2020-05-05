@@ -5,7 +5,7 @@ dotenv.config({ path: join(dirname(__dirname), ".env") });
 
 import express from "express";
 
-import { api } from "./routes/api";
+import { articles } from "./routes/articles";
 import { runJobs } from "./jobs";
 import { db } from "./config/db";
 
@@ -15,7 +15,7 @@ server.get("/", (req, res) => {
   res.send("Updates on <strong>Space Exploration</strong>");
 });
 
-server.use("/api", api);
+server.use("/api/v1/articles", articles);
 
 db.authenticate()
   .then(() => {
