@@ -8,11 +8,14 @@ import { getArticlesFromCNN } from "./channels/cnn";
 import { getArticlesFromBBC } from "./channels/bbc";
 import { getArticlesFromTNY } from "./channels/tny";
 import { getArticlesFromNYT } from "./channels/nyt";
+import { Intervals } from "../data/intervals";
 
 export const runJobs = () => {
   channels.forEach((channel) => {
     getUpdatesFromChannel(channel);
   });
+
+  setTimeout(runJobs, Intervals.DAY);
 };
 
 const getChannelArticleFunction = (name: string) => {
