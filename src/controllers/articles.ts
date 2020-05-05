@@ -63,3 +63,35 @@ export const getArticleByID = (req: Request, res: Response) => {
       res.json(response);
     });
 };
+
+/**
+ * Responds with `articles` that match the specified `query`
+ *
+ * **route**: /api/v1/articles/search/:query
+ */
+export const getArticlesBySearchQuery = (req: Request, res: Response) => {
+  const { query } = req.params;
+
+  ArticleService.getArticlesBySearchQuery(query)
+    .then((articles) => {
+      const response: ArticleResponse = {
+        success: true,
+        message: `Retrieved ${articles.length} articles with query: ${query}`,
+        statusCode: 200,
+        data: articles,
+      };
+
+      res.json(response);
+    })
+    .catch((err) => {
+      // TODO: do not return error object
+      const response: ErrorResponse = {
+        success: false,
+        message: err.message,
+        statusCode: 400,
+        error: err,
+      };
+
+      res.json(response);
+    });
+};
