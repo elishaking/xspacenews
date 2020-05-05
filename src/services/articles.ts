@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import Sequelize, { Op } from "sequelize";
 
 import { ArticleModel, ArticleModelAttributes } from "../models/article";
 import { logError } from "../utils/logger";
@@ -8,7 +8,9 @@ import { logError } from "../utils/logger";
  */
 export function getArticles(): Promise<ArticleModelAttributes[]> {
   return new Promise((resolve, reject) => {
-    ArticleModel.findAll()
+    ArticleModel.findAll({
+      order: [["date", "ASC"]],
+    })
       .then((articles) => {
         resolve(articles);
       })
@@ -48,9 +50,9 @@ export function getArticlesBySearchQuery(
   return new Promise((resolve, reject) => {
     ArticleModel.findAll({
       where: Sequelize.or(
-        { title: { contains: query } },
-        { description: { contains: query } },
-        { source: { contains: query } }
+        { title: { [Op.iRegexp]: query } },
+        { description: { [Op.iRegexp]: query } },
+        { source: { [Op.iRegexp]: query } }
       ),
     })
       .then((articles) => {
