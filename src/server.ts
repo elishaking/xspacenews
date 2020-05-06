@@ -12,6 +12,7 @@ import { allowCrossDomain } from "./utils/cors";
 
 const server = express();
 server.use(allowCrossDomain);
+server.use(express.json());
 
 db.authenticate()
   .then(() => {

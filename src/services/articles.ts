@@ -1,6 +1,10 @@
 import Sequelize, { Op } from "sequelize";
 
-import { ArticleModel, ArticleModelAttributes } from "../models/article";
+import {
+  ArticleModel,
+  ArticleModelAttributes,
+  Article,
+} from "../models/article";
 import { logError } from "../utils/logger";
 
 /**
@@ -58,6 +62,29 @@ export function getArticlesBySearchQuery(
     })
       .then((articles) => {
         resolve(articles);
+      })
+      .catch((err) => {
+        logError(err);
+        reject(err);
+      });
+  });
+}
+
+/**
+ * Updates `article` with specified `id` in the database
+ */
+export function updateArticle(article: Article) {
+  return new Promise((resolve, reject) => {
+    ArticleModel.findByPk(article.id)
+      .then((articleFound) => {
+        if (!articleFound)
+          reject(new Error(`Article with id: ${article.id} not Found`));
+
+        articleFound?.setDataValue("clicks", article.clicks);
+        return articleFound?.save();
+      })
+      .then((articleUpdated) => {
+        resolve(articleUpdated);
       })
       .catch((err) => {
         logError(err);
