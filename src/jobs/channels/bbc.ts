@@ -101,6 +101,7 @@ export const getArticlesFromBBC = async (page: Page) => {
               title: this.getArticleTitle(a),
               description: this.getArticleDescription(content),
               date: this.getArticleDate(content),
+              clicks: 0,
             };
 
             if (

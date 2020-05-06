@@ -99,6 +99,7 @@ export const getArticlesFromNYT = async (page: Page) => {
               title: this.getArticleTitle(a),
               description: this.getArticleDescription(a),
               date: this.getArticleDate(articleDiv),
+              clicks: 0,
             };
 
             // console.log(article);

@@ -97,6 +97,7 @@ export const getArticlesFromCNN = async (page: Page) => {
               title: this.getArticleTitle(content),
               description: this.getArticleDescription(content),
               date: this.getArticleDate(content),
+              clicks: 0,
             };
 
             if (

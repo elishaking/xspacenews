@@ -5,6 +5,7 @@ export interface Article {
   description: string;
   source: string;
   date: number;
+  clicks: number;
 }
 
 import Sequelize, { Model, BuildOptions } from "sequelize";
@@ -17,6 +18,7 @@ export interface ArticleModelAttributes extends Model {
   readonly description: string;
   readonly source: string;
   readonly date: number;
+  readonly clicks: number;
 }
 
 type ArticleModelStatic = typeof Model & {
@@ -54,10 +56,15 @@ export const ArticleModel = <ArticleModelStatic>db.define(
         unsigned: true,
       }),
     },
+    clicks: {
+      allowNull: false,
+      defaultValue: 0,
+      type: Sequelize.INTEGER,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// ArticleModel.sync({alter: true});
+ArticleModel.sync({ alter: true });
