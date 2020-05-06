@@ -9,7 +9,7 @@ import { logError } from "../utils/logger";
 export function getArticles(): Promise<ArticleModelAttributes[]> {
   return new Promise((resolve, reject) => {
     ArticleModel.findAll({
-      order: [["date", "ASC"]],
+      order: [["date", "DESC"]],
     })
       .then((articles) => {
         resolve(articles);
@@ -54,7 +54,7 @@ export function getArticlesBySearchQuery(
         { description: { [Op.iRegexp]: query } },
         { source: { [Op.iRegexp]: query } }
       ),
-      order: [["date", "ASC"]],
+      order: [["date", "DESC"]],
     })
       .then((articles) => {
         resolve(articles);
