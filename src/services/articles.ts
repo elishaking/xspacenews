@@ -54,6 +54,7 @@ export function getArticlesBySearchQuery(
         { description: { [Op.iRegexp]: query } },
         { source: { [Op.iRegexp]: query } }
       ),
+      order: [["date", "ASC"]],
     })
       .then((articles) => {
         resolve(articles);

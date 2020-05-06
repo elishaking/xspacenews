@@ -20,12 +20,11 @@ export const getArticles = (req: Request, res: Response) => {
       res.json(response);
     })
     .catch((err) => {
-      // TODO: do not return error object
       const response: ErrorResponse = {
         success: false,
         message: err.message,
         statusCode: 400,
-        error: err,
+        error: process.env.NODE_ENV === "development" ? err : {},
       };
 
       res.json(response);
@@ -52,12 +51,11 @@ export const getArticleByID = (req: Request, res: Response) => {
       res.json(response);
     })
     .catch((err) => {
-      // TODO: do not return error object
       const response: ErrorResponse = {
         success: false,
         message: err.message,
         statusCode: 400,
-        error: err,
+        error: process.env.NODE_ENV === "development" ? err : {},
       };
 
       res.json(response);
@@ -84,12 +82,11 @@ export const getArticlesBySearchQuery = (req: Request, res: Response) => {
       res.json(response);
     })
     .catch((err) => {
-      // TODO: do not return error object
       const response: ErrorResponse = {
         success: false,
         message: err.message,
         statusCode: 400,
-        error: err,
+        error: process.env.NODE_ENV === "development" ? err : {},
       };
 
       res.json(response);
