@@ -4,14 +4,14 @@ import { join, dirname } from "path";
 dotenv.config({ path: join(dirname(__dirname), ".env") });
 
 import express from "express";
-import cors from "cors";
 
 import { articles } from "./routes/articles";
 import { runJobs } from "./jobs";
 import { db } from "./config/db";
+import { allowCrossDomain } from "./utils/cors";
 
 const server = express();
-server.use(cors());
+server.use(allowCrossDomain);
 
 db.authenticate()
   .then(() => {
