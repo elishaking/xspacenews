@@ -13,6 +13,7 @@ import Sequelize, { Model, BuildOptions } from "sequelize";
 import { db } from "../config/db";
 
 export interface ArticleModelAttributes extends Model {
+  readonly id?: string;
   readonly url: string;
   readonly imageURL: string;
   readonly title: string;

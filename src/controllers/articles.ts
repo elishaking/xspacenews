@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as ArticleService from "../services/articles";
 import { ArticleResponse, ErrorResponse } from "../models/response";
+import { Article } from "../models/article";
 
 /**
  * Responds with `articles`
@@ -92,3 +93,33 @@ export const getArticlesBySearchQuery = (req: Request, res: Response) => {
       res.json(response);
     });
 };
+
+/**
+ * Updates `article` with specified `id` in the database
+ */
+export function updateArticle(req: Request, res: Response) {
+  const article: Article = req.body;
+  console.log(article);
+
+  ArticleService.updateArticle(article)
+    .then((updatedArticle) => {
+      const response: ArticleResponse = {
+        success: true,
+        message: `Updated article at id: ${updatedArticle.id}`,
+        statusCode: 200,
+        data: updatedArticle,
+      };
+
+      res.json(response);
+    })
+    .catch((err) => {
+      const response: ErrorResponse = {
+        success: false,
+        message: err.message,
+        statusCode: 400,
+        error: process.env.NODE_ENV === "development" ? err : {},
+      };
+
+      res.json(response);
+    });
+}

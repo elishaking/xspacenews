@@ -73,7 +73,9 @@ export function getArticlesBySearchQuery(
 /**
  * Updates `article` with specified `id` in the database
  */
-export function updateArticle(article: Article) {
+export function updateArticle(
+  article: Article
+): Promise<ArticleModelAttributes> {
   return new Promise((resolve, reject) => {
     ArticleModel.findByPk(article.id)
       .then((articleFound) => {
