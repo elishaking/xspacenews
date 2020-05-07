@@ -99,7 +99,6 @@ export const getArticlesBySearchQuery = (req: Request, res: Response) => {
  */
 export function updateArticleByID(req: Request, res: Response) {
   const article: Article = req.body;
-  console.log(article);
 
   ArticleService.updateArticle(article)
     .then((updatedArticle) => {

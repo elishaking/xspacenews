@@ -82,7 +82,7 @@ export function updateArticle(
         if (!articleFound)
           reject(new Error(`Article with id: ${article.id} not Found`));
 
-        articleFound?.setDataValue("clicks", article.clicks);
+        articleFound?.setDataValue("clicks", articleFound.clicks + 1);
         return articleFound?.save();
       })
       .then((articleUpdated) => {
