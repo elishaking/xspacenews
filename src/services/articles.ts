@@ -26,14 +26,18 @@ export function getArticles(): Promise<ArticleModelAttributes[]> {
 }
 
 /**
- * Finds and returns all `articles` from the database
+ * Finds and returns all `articles` with some conditions from the database
  */
 export function getArticlesBy(
-  order: OrderItem[]
+  order: OrderItem[],
+  limit: number,
+  offset: number
 ): Promise<ArticleModelAttributes[]> {
   return new Promise((resolve, reject) => {
     ArticleModel.findAll({
       order: order,
+      limit: limit,
+      offset: offset,
     })
       .then((articles) => {
         resolve(articles);
