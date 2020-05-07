@@ -6,7 +6,7 @@ import { Article } from "../models/article";
 /**
  * Responds with `articles`
  *
- * **route**: /api/v1/articles
+ * **route**: GET /api/v1/articles
  */
 export const getArticles = (req: Request, res: Response) => {
   ArticleService.getArticles()
@@ -33,9 +33,40 @@ export const getArticles = (req: Request, res: Response) => {
 };
 
 /**
+ * Updates `article` with specified `id` in the database
+ *
+ * *route**: POST /api/v1/articles/:id
+ */
+export function getArticlesBy(req: Request, res: Response) {
+  const { order, limit, offset } = req.body;
+
+  ArticleService.getArticlesBy(order, limit, offset)
+    .then((articles) => {
+      const response: ArticleResponse = {
+        success: true,
+        message: `Retrieved ${articles.length} articles`,
+        statusCode: 200,
+        data: articles,
+      };
+
+      res.json(response);
+    })
+    .catch((err) => {
+      const response: ErrorResponse = {
+        success: false,
+        message: err.message,
+        statusCode: 400,
+        error: process.env.NODE_ENV === "development" ? err : {},
+      };
+
+      res.json(response);
+    });
+}
+
+/**
  * Responds with `article` at a given `id`
  *
- * **route**: /api/v1/articles/:id
+ * **route**: GET /api/v1/articles/:id
  */
 export const getArticleByID = (req: Request, res: Response) => {
   const { id } = req.params;
@@ -66,7 +97,7 @@ export const getArticleByID = (req: Request, res: Response) => {
 /**
  * Responds with `articles` that match the specified `query`
  *
- * **route**: /api/v1/articles/search/:query
+ * **route**: GET /api/v1/articles/search/:query
  */
 export const getArticlesBySearchQuery = (req: Request, res: Response) => {
   const { query } = req.params;
@@ -95,7 +126,9 @@ export const getArticlesBySearchQuery = (req: Request, res: Response) => {
 };
 
 /**
- * Updates `article` with specified `id` in the database
+ * Responds with updated `article` at specified `id` from the database
+ *
+ * **route**: PUT /api/v1/articles/:id
  */
 export function updateArticleByID(req: Request, res: Response) {
   const article: Article = req.body;

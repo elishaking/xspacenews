@@ -4,12 +4,13 @@ import {
   getArticleByID,
   getArticlesBySearchQuery,
   updateArticleByID,
+  getArticlesBy,
 } from "../controllers/articles";
 
 export const articles = Router();
 
 // route: /api/v1/articles
-articles.route("/").get(getArticles);
+articles.route("/").get(getArticles).post(getArticlesBy);
 
 // route: /api/v1/articles/:id
 articles.route("/:id").get(getArticleByID).put(updateArticleByID);
