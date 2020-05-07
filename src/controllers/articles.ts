@@ -100,7 +100,8 @@ export const getArticleByID = (req: Request, res: Response) => {
  * **route**: GET /api/v1/articles/search/:query
  */
 export const getArticlesBySearchQuery = (req: Request, res: Response) => {
-  const { query } = req.params;
+  let { query } = req.params;
+  if (query === "ALL_ARTICLES") query = "";
 
   ArticleService.getArticlesBySearchQuery(query)
     .then((articles) => {
