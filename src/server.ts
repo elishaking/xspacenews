@@ -9,6 +9,7 @@ import { articles } from "./routes/articles";
 import { runJobs } from "./jobs";
 import { db } from "./config/db";
 import { allowCrossDomain } from "./utils/cors";
+import { ErrorResponse } from "./models/response";
 
 const server = express();
 server.use(allowCrossDomain);
@@ -38,6 +39,17 @@ server.get("/", (req, res) => {
 });
 
 server.use("/api/v1/articles", articles);
+
+server.all("*", (req, res) => {
+  const response: ErrorResponse = {
+    success: false,
+    statusCode: 404,
+    message: "Not Found",
+    error: {},
+  };
+
+  res.json(response);
+});
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
