@@ -14,6 +14,7 @@ import { ErrorResponse } from "./models/response";
 const server = express();
 server.use(allowCrossDomain);
 server.use(express.json());
+server.use(express.static(join(dirname(__dirname), "assets")));
 
 db.authenticate()
   .then(() => {
